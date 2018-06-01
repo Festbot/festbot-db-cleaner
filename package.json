@@ -1,0 +1,22 @@
+{
+  "name": "festbot-db-cleaner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Festbot/festbot-db-cleaner.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Festbot/festbot-db-cleaner/issues"
+  },
+  "homepage": "https://github.com/Festbot/festbot-db-cleaner#readme",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}

@@ -10,7 +10,7 @@ module.exports.updateDocument = async function(db, data) {
 	return await axios({
 		url: DB_HOST + '/' + db + '/' + data._id,
 		method: 'put',
-		headers: {'If-Match': data._rev},
+		headers: { 'If-Match': data._rev },
 		data: data
 	});
 };

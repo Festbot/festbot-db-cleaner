@@ -4,7 +4,6 @@ const CLIENT_ID = 'a9e2d9e4fbd845e3ac54b4ab24c6a44d';
 const CLIENT_SECRET = '56318a6ca19f4bbd85c66c81a36c5cca';
 const AUTH_CODE = Buffer.from(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64');
 
-
 module.exports.getAccessToken = async function() {
 	const response = await request.post({
 		url: 'https://accounts.spotify.com/api/token',
@@ -29,7 +28,7 @@ module.exports.searchArtist = async function(artist, token) {
 	});
 
 	if (data.artists.items.length === 0) {
-		throw new Error('Couldn\'t find artist.');
+		throw new Error("Couldn't find artist.");
 	}
 
 	return data.artists.items[0];

@@ -71,7 +71,7 @@ const getStatus = function() {
 		isInProgress,
 		error,
 		itemsToUpdate,
-		couldFindPhoto,
+		couldntFindPhoto,
 		itemsProcessed,
 		itemsUpdated,
 		isFinished

@@ -57,6 +57,7 @@ const updateArtistPhotos = async function() {
 
 			await sleep(1000);
 		} catch (e) {
+			console.log(e);
 			error = e;
 			couldntFindPhoto.push(artistDoc.name);
 		}

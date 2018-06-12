@@ -42,23 +42,22 @@ const updateArtistPhotos = async function() {
 			console.log('Working on: ' + artistDoc.name);
 
 			console.log('Downloading artist data from Spotify...');
-			//const spotifyArtistData = await searchArtist(artistDoc.name, spotifyAccessToken);
+			const spotifyArtistData = await searchArtist(artistDoc.name, spotifyAccessToken);
 
 			console.log('Downloading image from Spotify...');
-			//const stream = await downloadStream(spotifyArtistData.images[0].url);
+			const stream = await downloadStream(spotifyArtistData.images[0].url);
 
 			console.log('Uploading image to the CDN...');
-			//const uuid = await uploadStream(stream);
+			const uuid = await uploadStream(stream);
 
 			console.log('Updating artist entry with the new image. UUID:', uuid);
-			//await updateDocument('artists', { ...artistDoc, artistPhoto: uuid, hasPhoto: true });
+			await updateDocument('artists', { ...artistDoc, artistPhoto: uuid, hasPhoto: true });
 
 			itemsUpdated++;
 
 			await sleep(1000);
 		} catch (e) {
 			console.log(e);
-			error = e;
 			couldntFindPhoto.push(artistDoc.name);
 		}
 	}

@@ -39,6 +39,8 @@ const updateArtistPhotos = async function() {
 		itemsProcessed++;
 
 		try {
+			await sleep(1000);
+
 			console.log('Working on: ' + artistDoc.name);
 
 			console.log('Downloading artist data from Spotify...');
@@ -54,8 +56,6 @@ const updateArtistPhotos = async function() {
 			await updateDocument('artists', { ...artistDoc, artistPhoto: uuid, hasPhoto: true });
 
 			itemsUpdated++;
-
-			await sleep(1000);
 		} catch (e) {
 			console.log(e);
 			couldntFindPhoto.push(artistDoc.name);

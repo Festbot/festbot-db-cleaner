@@ -53,7 +53,12 @@ const updateArtistPhotos = async function() {
 			const uuid = await uploadStream(stream);
 
 			console.log('Updating artist entry with the new image. UUID:', uuid);
-			await updateDocument('artists', { ...artistDoc, artistPhoto: uuid, hasPhoto: true });
+			await updateDocument('artists', {
+				...artistDoc,
+				artistPhoto: uuid,
+				hasPhoto: true,
+				genres: spotifyArtistData.genres
+			});
 
 			itemsUpdated++;
 		} catch (e) {

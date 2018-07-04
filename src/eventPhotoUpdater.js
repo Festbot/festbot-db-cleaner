@@ -47,6 +47,12 @@ const updateEventPhotos = async function() {
 					artistId: artistDoc._id
 				});
 			} else {
+				await updateDocument('events', {
+					...eventDoc,
+					hasPhoto: false,
+					artistId: artistDoc._id
+				});
+
 				throw new Error(artistDoc.name + " didn't have a photo.");
 			}
 

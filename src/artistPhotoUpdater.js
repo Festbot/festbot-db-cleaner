@@ -30,12 +30,10 @@ const updateArtistPhotos = async function() {
 
 	console.log('Downloading artists...');
 	const artists = await getDocuments('artists');
-	const artistsWithoutPhoto = artists.filter(artist => !artist.doc.artistPhoto && artist.doc.name);
+	itemsToUpdate = artists.length;
 
-	itemsToUpdate = artistsWithoutPhoto.length;
-
-	for (let i = 0; i < artistsWithoutPhoto.length; i++) {
-		const artistDoc = artistsWithoutPhoto[i].doc;
+	for (let i = 0; i < itemsToUpdate; i++) {
+		const artistDoc = artists[i].doc;
 		itemsProcessed++;
 
 		try {
@@ -46,17 +44,21 @@ const updateArtistPhotos = async function() {
 			console.log('Downloading artist data from Spotify...');
 			const spotifyArtistData = await searchArtist(artistDoc.name, spotifyAccessToken);
 
-			console.log('Downloading image from Spotify...');
-			const stream = await downloadStream(spotifyArtistData.images[0].url);
+			let uuid = undefined;
 
-			console.log('Uploading image to the CDN...');
-			const uuid = await uploadStream(stream);
+			if (!artistDoc.artistPhoto) {
+				console.log('Downloading image from Spotify...');
+				const stream = await downloadStream(spotifyArtistData.images[0].url);
+
+				console.log('Uploading image to the CDN...');
+				uuid = await uploadStream(stream);
+			}
 
 			console.log('Updating artist entry with the new image. UUID:', uuid);
 			await updateDocument('artists', {
 				...artistDoc,
 				artistPhoto: uuid,
-				hasPhoto: true,
+				hasPhoto: !!uuid,
 				genres: spotifyArtistData.genres
 			});
 

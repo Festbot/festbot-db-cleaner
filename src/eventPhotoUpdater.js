@@ -40,7 +40,12 @@ const updateEventPhotos = async function() {
 			const [artistDoc] = await findDocument('artists', 'name', eventDoc.artist);
 
 			if (artistDoc.hasPhoto) {
-				await updateDocument('events', { ...eventDoc, artistPhoto: artistDoc.artistPhoto, hasPhoto: true });
+				await updateDocument('events', {
+					...eventDoc,
+					artistPhoto: artistDoc.artistPhoto,
+					hasPhoto: true,
+					artistId: artistDoc._id
+				});
 			} else {
 				throw new Error(artistDoc.name + " didn't have a photo.");
 			}

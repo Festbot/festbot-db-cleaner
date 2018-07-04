@@ -1,6 +1,14 @@
 const axios = require('axios');
 const DB_HOST = 'https://api.festbot.com';
-const qs = require('qs');
+
+module.exports.createDocument = async function(db, data) {
+	return await axios({
+		url: DB_HOST + '/' + db,
+		method: 'post',
+		headers: { 'Content-Yype': 'application/json' },
+		data: data
+	});
+};
 
 module.exports.getDocuments = async function(db) {
 	const { data } = await axios.get(DB_HOST + '/' + db + '/_all_docs?include_docs=true');

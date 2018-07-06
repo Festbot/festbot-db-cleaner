@@ -60,6 +60,14 @@ const updateArtistPhotos = async function() {
 				newDoc.hasPhoto = true;
 			}
 
+			if (typeof !artistDoc.popularity === 'undefined') {
+				newDoc.popularity = -1;
+			}
+
+			if (artistDoc.featured) {
+				newDoc.featured = false;
+			}
+
 			console.log('Updating artist entry...');
 			await updateDocument('artists', newDoc);
 

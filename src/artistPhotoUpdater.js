@@ -37,30 +37,38 @@ const updateArtistPhotos = async function() {
 		itemsProcessed++;
 
 		try {
-			await sleep(1000);
+			await sleep(100);
 
 			console.log('Working on: ' + artistDoc.name);
 
 			console.log('Downloading artist data from Spotify...');
-			const spotifyArtistData = await searchArtist(artistDoc.name, spotifyAccessToken);
 
 			const newDoc = {
-				...artistDoc,
-				genres: spotifyArtistData.genres
+				...artistDoc
 			};
 
-			if (!artistDoc.artistPhoto) {
-				console.log('Downloading image from Spotify...');
-				const stream = await downloadStream(spotifyArtistData.images[0].url);
+			if (!artistDoc.artistPhoto || !artistDoc.genres) {
+				await sleep(1000);
 
-				console.log('Uploading image to the CDN...');
-				const uuid = await uploadStream(stream);
+				const spotifyArtistData = await searchArtist(artistDoc.name, spotifyAccessToken);
 
-				newDoc.artistPhoto = uuid;
-				newDoc.hasPhoto = true;
+				if (!artistDoc.genres) {
+					newDocs.genres = spotifyArtistData.genres;
+				}
+
+				if (!artistDoc.artistPhoto) {
+					console.log('Downloading image from Spotify...');
+					const stream = await downloadStream(spotifyArtistData.images[0].url);
+
+					console.log('Uploading image to the CDN...');
+					const uuid = await uploadStream(stream);
+
+					newDoc.artistPhoto = uuid;
+					newDoc.hasPhoto = true;
+				}
 			}
 
-			if (typeof !artistDoc.popularity === 'undefined') {
+			if (!artistDoc.popularity) {
 				newDoc.popularity = -1;
 			}
 

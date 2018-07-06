@@ -72,7 +72,7 @@ const updateArtistPhotos = async function() {
 				newDoc.popularity = -1;
 			}
 
-			if (artistDoc.featured) {
+			if (!artistDoc.featured) {
 				newDoc.featured = false;
 			}
 

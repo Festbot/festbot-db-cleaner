@@ -47,6 +47,14 @@ const updateArtistPhotos = async function() {
 				...artistDoc
 			};
 
+			if (!artistDoc.popularity) {
+				newDoc.popularity = -1;
+			}
+
+			if (!artistDoc.featured) {
+				newDoc.featured = false;
+			}
+
 			if (!artistDoc.artistPhoto || !artistDoc.genres) {
 				await sleep(1000);
 
@@ -66,14 +74,6 @@ const updateArtistPhotos = async function() {
 					newDoc.artistPhoto = uuid;
 					newDoc.hasPhoto = true;
 				}
-			}
-
-			if (!artistDoc.popularity) {
-				newDoc.popularity = -1;
-			}
-
-			if (!artistDoc.featured) {
-				newDoc.featured = false;
 			}
 
 			console.log('Updating artist entry...');

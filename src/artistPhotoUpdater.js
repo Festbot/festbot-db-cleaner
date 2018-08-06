@@ -55,13 +55,17 @@ const updateArtistPhotos = async function() {
 				newDoc.featured = false;
 			}
 
-			if (!artistDoc.artistPhoto || !artistDoc.genres) {
+			if (!artistDoc.artistPhoto || !artistDoc.genres || artistDoc.spotify) {
 				await sleep(1000);
 
 				const spotifyArtistData = await searchArtist(artistDoc.name, spotifyAccessToken);
 
 				if (!artistDoc.genres) {
-					newDocs.genres = spotifyArtistData.genres;
+					newDoc.genres = spotifyArtistData.genres;
+				}
+
+				if (!artistDoc.spotify) {
+					newDoc.spotify = spotifyArtistData.id;
 				}
 
 				if (!artistDoc.artistPhoto) {
